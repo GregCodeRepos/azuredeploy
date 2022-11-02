@@ -15,12 +15,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '3.1.301'
           include-prerelease: true
+          
+      - name: Building web app
+        uses: azure/appservice-build@v2
+        with:
+          platform: <PLATFORM_NAME>
+          platform-version: .NET Core 3.1
+          source-directory: ${{env.DOTNET_ROOT}}
+          output-directory: ${{env.DOTNET_ROOT}}/myapp
+
+      
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
